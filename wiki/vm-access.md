@@ -471,8 +471,9 @@ Complete these steps:
 > Add the [`SSH` public key](./ssh.md#ssh-public-key) for [the `Autochecker` agent](./autochecker.md#the-autochecker-agent) so that it can connect to your VM as the user `<user>`
 > to have access to files owned by you.
 
+1. [Connect to your VM as the user `<user>`](#connect-to-your-vm-by-ssh-as-the-user-user-local) if not yet connected.
 
-1. To check whether the public `SSH` key is already present,
+2. To check whether the public `SSH` key is already present,
 
    [run in the `VS Code Terminal`](./vs-code.md#run-a-command-in-the-vs-code-terminal):
 
@@ -486,7 +487,7 @@ Complete these steps:
    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKiL0DDQZw7L0Uf1c9cNlREY7IS6ZkIbGVWNsClqGNCZ se-toolkit-autochecker
    ```
 
-2. To add the `SSH` public key,
+3. To add the `SSH` public key,
 
    [run in the `VS Code Terminal`](./vs-code.md#run-a-command-in-the-vs-code-terminal):
 
@@ -494,7 +495,7 @@ Complete these steps:
    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKiL0DDQZw7L0Uf1c9cNlREY7IS6ZkIbGVWNsClqGNCZ se-toolkit-autochecker" >> ~/.ssh/authorized_keys
    ```
 
-3. To verify the `SSH` public key was added,
+4. To verify the `SSH` public key was added,
 
    [run in the `VS Code Terminal`](./vs-code.md#run-a-command-in-the-vs-code-terminal):
 
