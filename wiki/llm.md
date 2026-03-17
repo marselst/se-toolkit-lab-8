@@ -10,6 +10,7 @@
   - [`OpenRouter`](#openrouter)
 - [Free models](#free-models)
   - [LLM provider API](#llm-provider-api)
+  - [LLM provider APIs](#llm-provider-apis)
   - [`OpenAI`-compatible API](#openai-compatible-api)
   - [Request to LLM provider API](#request-to-llm-provider-api)
 - [Token](#token)
@@ -61,10 +62,11 @@ An [LLM provider](#llm-provider) API allows [applications](./software-types.md#a
 
 - receive generated [responses](#response)
 
-Docs:
+### LLM provider APIs
 
 - [OpenAI API reference](https://developers.openai.com/api/reference/overview)
 - [OpenRouter API reference](https://openrouter.ai/docs/api-reference/overview)
+- [Anthropic Claude API reference](https://platform.claude.com/docs/en/api/overview)
 
 ### `OpenAI`-compatible API
 
