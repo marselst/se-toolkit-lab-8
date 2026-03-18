@@ -3,6 +3,8 @@
 <h2>Table of contents</h2>
 
 - [What is `Qwen Code` API](#what-is-qwen-code-api)
+- [`Qwen Code` API base URL](#qwen-code-api-base-url)
+  - [`<qwen-code-api-base-url>` placeholder](#qwen-code-api-base-url-placeholder)
 - [Set up the `Qwen Code` API (REMOTE)](#set-up-the-qwen-code-api-remote)
   - [Set up the `Qwen Code` CLI (REMOTE)](#set-up-the-qwen-code-cli-remote)
   - [Clone the `Qwen Code` API repository (REMOTE)](#clone-the-qwen-code-api-repository-remote)
@@ -19,6 +21,16 @@
 The `Qwen Code` API is an [OpenAI-compatible API](./llm.md#openai-compatible-api) that uses the [`Qwen Code` credentials file](./qwen-code.md#qwen-code-credentials-file) to provide access to the [`Qwen` API](./qwen-code.md#qwen-api).
 
 The `Qwen Code` API is deployed using [`qwen-code-api`](https://github.com/inno-se-toolkit/qwen-code-api).
+
+## `Qwen Code` API base URL
+
+- (REMOTE) When running the request on the VM: `http://localhost:<qwen-code-api-host-port>/v1`
+
+- (LOCAL) When running the request on the local machine: `http://<lms-api-url>:<lms-api-host-port>/utils/qwen-code-api/v1`
+
+### `<qwen-code-api-base-url>` placeholder
+
+[`Qwen Code` API base URL](#qwen-code-api-base-url) (without `<` and `>`).
 
 ## Set up the `Qwen Code` API (REMOTE)
 
