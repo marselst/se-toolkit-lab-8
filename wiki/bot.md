@@ -10,7 +10,10 @@
 - [Deploy the bot on the VM](#deploy-the-bot-on-the-vm)
   - [Enter the repository directory (REMOTE)](#enter-the-repository-directory-remote)
   - [Configure the environment (REMOTE)](#configure-the-environment-remote)
-  - [Start the bot (REMOTE)](#start-the-bot-remote)
+  - [Start the bot](#start-the-bot)
+    - [Start the bot via `uv run python`](#start-the-bot-via-uv-run-python)
+    - [Start the bot via `uv run poe`](#start-the-bot-via-uv-run-poe)
+    - [Start the bot via `Docker Compose`](#start-the-bot-via-docker-compose)
   - [Check the bot](#check-the-bot)
 
 ## About `Telegram` bots
@@ -67,7 +70,7 @@ The [username](#bot-username) of your bot.
 1. [Connect to the VM as the user `admin` (LOCAL)](./vm-access.md#connect-to-the-vm-as-the-user-user-local).
 2. [Enter the repository directory (REMOTE)](#enter-the-repository-directory-remote).
 3. [Configure the environment (REMOTE)](#configure-the-environment-remote).
-4. [Start the bot (REMOTE)](#start-the-bot-remote).
+4. [Start the bot](#start-the-bot).
 5. [Check the bot](#check-the-bot).
 
 ### Enter the repository directory (REMOTE)
@@ -101,7 +104,36 @@ The [username](#bot-username) of your bot.
 
 3. Save and close the file.
 
-### Start the bot (REMOTE)
+### Start the bot
+
+<!-- no toc -->
+- Method 1: [Start the bot via `uv run python`](#start-the-bot-via-uv-run-python)
+- Method 2: [Start the bot via `uv run poe`](#start-the-bot-via-uv-run-poe)
+- Method 3: [Start the bot via `Docker Compose`](#start-the-bot-via-docker-compose)
+
+#### Start the bot via `uv run python`
+
+1. To start the bot,
+
+   [run in the `VS Code Terminal`](./vs-code.md#run-a-command-in-the-vs-code-terminal):
+
+   ```terminal
+   uv run --env-file .env.bot.secret python bot/bot.py
+   ```
+
+#### Start the bot via `uv run poe`
+
+1. To start the bot,
+
+   [run in the `VS Code Terminal`](./vs-code.md#run-a-command-in-the-vs-code-terminal):
+
+   ```terminal
+   uv run poe bot
+   ```
+
+   This loads the environment variables from [`.env.bot.secret`](./dotenv-bot-secret.md) automatically.
+
+#### Start the bot via `Docker Compose`
 
 1. To start the bot,
 
