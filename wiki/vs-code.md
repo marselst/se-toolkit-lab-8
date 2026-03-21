@@ -394,9 +394,10 @@ Method 2:
 
 1. [Open the `VS Code Terminal`](#open-the-vs-code-terminal).
 2. [Check the current shell in the `VS Code Terminal`](#check-the-current-shell-in-the-vs-code-terminal).
-3. [Check whether you run in the `SSH` shell](./ssh.md#check-whether-you-run-an-ssh-shell) and decide whether you need to run an [SSH shell](./ssh.md#ssh-shell).
-4. Write or [paste](#paste-text-inside-the-vs-code-terminal) a [command](./shell.md#shell-command) or commands.
-5. Press `Enter`.
+3. Decide whether you need to run the command on the VM (REMOTE) or on the local machine (LOCAL).
+4. [Check whether you run in the `SSH` shell](./ssh.md#check-whether-you-run-an-ssh-shell).
+5. Type or [paste](#paste-text-inside-the-vs-code-terminal) a [command](./shell.md#shell-command) or commands.
+6. To run, press `Enter`.
 
 ## `VS Code Explorer`
 
