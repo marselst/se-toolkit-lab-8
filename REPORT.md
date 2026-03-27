@@ -4,15 +4,94 @@ Paste your checkpoint evidence below. Add screenshots as image files in the repo
 
 ## Task 1A — Bare agent
 
-<!-- Paste the agent's response to "What is the agentic loop?" and "What labs are available in our LMS?" -->
+### Question: "What is the agentic loop?"
+
+**Answer:**
+The agentic loop is the core iterative process that AI agents use to accomplish tasks. It typically follows this cycle:
+
+1. **Perceive/Observation** — The agent gathers information about its environment, current state, or task context (e.g., reading files, checking outputs, receiving user input)
+2. **Think/Reasoning** — The agent processes the information, plans next steps, and decides what action to take (e.g., "I need to read this file first," or "I should search for more information")
+3. **Act/Action** — The agent executes an action using available tools (e.g., calling APIs, running commands, writing files, sending messages)
+4. **Repeat** — The agent observes the results of its action and continues the loop until the goal is achieved
+
+This loop enables agents to work autonomously toward complex goals, adapt based on feedback from actions, break down multi-step tasks, and self-correct when things don't go as planned.
+
+### Question: "What labs are available in our LMS?"
+
+**Answer:**
+The agent without MCP tools cannot directly query the LMS backend. It can only read from its workspace files. When asked this question, it found information about Lab 8 by reading the task files in the repository, but it doesn't have access to real-time LMS data.
 
 ## Task 1B — Agent with LMS tools
 
-<!-- Paste the agent's response to "What labs are available?" and "Describe the architecture of the LMS system" -->
+### Question: "What labs are available?"
+
+**Answer:**
+Available Labs in the LMS:
+
+| # | Lab Title |
+|---|-----------|
+| Lab 01 | Products, Architecture & Roles |
+| Lab 02 | Run, Fix, and Deploy a Backend Service |
+| Lab 03 | Backend API: Explore, Debug, Implement, Deploy |
+| Lab 04 | Testing, Front-end, and AI Agents |
+| Lab 05 | Data Pipeline and Analytics Dashboard |
+| Lab 06 | Build Your Own Agent |
+| Lab 07 | Build a Client with an AI Coding Agent |
+| Lab 08 | lab-08 (The Agent is the Interface — current lab) |
+
+The agent is now using MCP tools to query the real LMS backend.
+
+### Question: "Describe the architecture of the LMS system"
+
+**Answer:**
+The LMS system architecture consists of:
+
+**High-Level Components:**
+- **Caddy Reverse Proxy** (Port 42002) - Single entry point routing to all services
+- **FastAPI Backend** (Port 42001) - REST API with Swagger UI
+- **PostgreSQL Database** (Port 42004) - Relational database for items, learners, interactions
+- **pgAdmin** (Port 42003) - Web-based database management
+- **Nanobot AI Agent** (Ports 8765 WS, 18790 HTTP) - AI agent with MCP tools
+- **Qwen Code API** (Port 8080) - LLM API gateway
+- **VictoriaLogs** - Log storage (7-day retention)
+- **VictoriaTraces** - Distributed trace storage
+- **OTel Collector** - Collects and forwards logs/traces
+
+**Data Model (OBER-Based):**
+- Item hierarchy: Course → Lab → Task → Step
+- Learners table with interactions tracking
+
+**Key Design Decisions:**
+- Monolithic architecture for easy deployment
+- Caddy for single-origin setup (no CORS issues)
+- SQLModel combining SQLAlchemy + Pydantic
+- Async database operations
+- Feature flags for endpoint availability
 
 ## Task 1C — Skill prompt
 
-<!-- Paste the agent's response to "Show me the scores" (without specifying a lab) -->
+### Question: "Show me the scores" (without specifying a lab)
+
+**Answer:**
+The agent with the skill prompt now:
+1. Automatically fetched pass rates for ALL labs
+2. Presented a summary table with Lab, Avg Score, Tasks, and Total Attempts
+3. Provided detailed breakdown for each lab showing individual task scores
+4. Highlighted key insights:
+   - Highest scoring task: Lab 01 - Lab setup (84.2%)
+   - Lowest scoring task: Lab 02 - Make your VM a proxy (0.0%)
+   - Most attempted task: Lab 01 - Lab setup (2,937 attempts)
+   - Best performing lab: Lab 05 & Lab 07 (67.3% avg)
+   - Most challenging lab: Lab 02 (48.3% avg)
+
+The skill prompt taught the agent to:
+- Format percentages nicely (e.g., "51.4%" instead of decimals)
+- Format counts with commas for thousands
+- Use tables for comparing multiple items
+- Highlight important findings
+- Keep responses concise but informative
+
+**Skill prompt location:** `nanobot/workspace/skills/lms/SKILL.md`
 
 ## Task 2A — Deployed agent
 
