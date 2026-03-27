@@ -95,11 +95,47 @@ The skill prompt taught the agent to:
 
 ## Task 2A — Deployed agent
 
-<!-- Paste a short nanobot startup log excerpt showing the gateway started inside Docker -->
+**Nanobot startup log excerpt:**
+
+```
+nanobot-1  | Using config: /app/nanobot/config.resolved.json
+nanobot-1  | 🐈 Starting nanobot gateway version 0.1.4.post5 on port 18790...
+nanobot-1  | 2026-03-27 09:56:48.892 | INFO     | nanobot.channels.manager:_init_channels:54 - WebChat channel enabled
+nanobot-1  | ✓ Channels enabled: webchat
+nanobot-1  | 2026-03-27 09:56:49.397 | INFO     | nanobot_webchat.channel:start:72 - WebChat starting on 0.0.0.0:8765
+nanobot-1  | 2026-03-27 09:56:51.579 | INFO     | nanobot.agent.tools.mcp:connect_mcp_servers:182 - MCP server 'lms': connected, 9 tools registered
+nanobot-1  | 2026-03-27 09:56:51.579 | INFO     | nanobot.agent.loop:run:260 - Agent loop started
+```
+
+The nanobot gateway is running as a Docker service with:
+- WebChat channel enabled on port 8765
+- MCP server connected with 9 LMS tools registered
+- Agent loop running
 
 ## Task 2B — Web client
 
-<!-- Screenshot of a conversation with the agent in the Flutter web app -->
+**WebSocket endpoint test:**
+
+The WebSocket endpoint at `ws://localhost:42002/ws/chat?access_key=nano1` is working. Agent response to "What labs are available?":
+
+```
+Here are the available labs:
+
+| ID | Title |
+|----|-------|
+| 1 | Lab 01 – Products, Architecture & Roles |
+| 2 | Lab 02 – Run, Fix, and Deploy a Backend Service |
+| 3 | Lab 03 – Backend API: Explore, Debug, Implement, Deploy |
+| 4 | Lab 04 – Testing, Front-end, and AI Agents |
+| 5 | Lab 05 – Data Pipeline and Analytics Dashboard |
+| 6 | Lab 06 – Build Your Own Agent |
+| 7 | Lab 07 – Build a Client with an AI Coding Agent |
+| 8 | Lab 08 – The Agent is the Interface (current lab) |
+```
+
+**Flutter web client:**
+
+The Flutter web client is accessible at `http://localhost:42002/flutter/`. The login screen accepts the `NANOBOT_ACCESS_KEY` (nano1) for authentication.
 
 ## Task 3A — Structured logging
 
