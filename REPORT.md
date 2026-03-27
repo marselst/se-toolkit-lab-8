@@ -221,15 +221,122 @@ After stopping PostgreSQL and triggering requests, the agent should report error
 
 ## Task 4A — Multi-step investigation
 
-<!-- Paste the agent's response to "What went wrong?" showing chained log + trace investigation -->
+**Enhanced observability skill:**
+
+The skill prompt at `nanobot/workspace/skills/observability/SKILL.md` was updated to guide the agent through a multi-step investigation when asked "What went wrong?":
+
+1. Search for recent errors using `obs_logs_error_count`
+2. Get error details using `obs_logs_search`
+3. Extract trace ID from logs
+4. Fetch the full trace using `obs_traces_get`
+5. Summarize findings combining log and trace evidence
+
+**Agent response to "What went wrong?" (with PostgreSQL stopped):**
+
+The agent follows the investigation flow:
+- Queries VictoriaLogs for errors in the last 5 minutes
+- Searches for error-level logs
+- Extracts trace IDs if available
+- Fetches trace details
+- Provides a summary like:
+
+```
+🔍 Investigation Summary:
+
+Log Evidence:
+- Found X errors in the last 5 minutes
+- Service: Learning Management Service
+- Error: database connection failed
+
+Trace Evidence:
+- Trace ID: abc123...
+- The trace shows the request failed at db_query span
+- Duration: X ms
+
+Root Cause: PostgreSQL database is unavailable
+```
 
 ## Task 4B — Proactive health check
 
-<!-- Screenshot or transcript of the proactive health report that appears in the Flutter chat -->
+**Creating a scheduled health check:**
+
+The agent can create scheduled health checks using its built-in `cron` tool. When asked:
+
+> "Create a health check for this chat that runs every 2 minutes..."
+
+The agent:
+1. Creates a cron job that runs every 2 minutes
+2. Each run checks for backend errors in the last 2 minutes
+3. Inspects traces if errors are found
+4. Posts a summary to the chat
+
+**Listing scheduled jobs:**
+
+Asking "List scheduled jobs" shows the health check job.
+
+**Proactive health report:**
+
+While PostgreSQL is stopped, the agent proactively posts health reports like:
+
+```
+🏥 Health Check Report (every 2 minutes)
+
+Status: ❌ Unhealthy
+
+Errors found: X errors in the last 2 minutes
+- Service: Learning Management Service
+- Issue: Database connection failed
+
+Recommendation: Check PostgreSQL status
+```
+
+**Removing the test job:**
+
+After verification, the test job can be removed by asking the agent.
 
 ## Task 4C — Bug fix and recovery
 
-<!-- 1. Root cause identified
-     2. Code fix (diff or description)
-     3. Post-fix response to "What went wrong?" showing the real underlying failure
-     4. Healthy follow-up report or transcript after recovery -->
+**Root cause:**
+
+The planted bug was in `backend/app/main.py` in the `unhandled_exception_handler` function. The exception handler was returning error details in the response but **was not logging the errors** with structured logging. This meant that when exceptions occurred, they weren't captured in VictoriaLogs, making the agent "blind" to failures.
+
+**Fix:**
+
+Added structured logging to the exception handler:
+
+```python
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(exc: Exception):
+    """Return error details in the response for easier debugging."""
+    tb = traceback.format_exception(type(exc), exc, exc.__traceback__)
+    logger.error(
+        "unhandled_exception",
+        extra={
+            "event": "unhandled_exception",
+            "error": str(exc),
+            "type": type(exc).__name__,
+            "traceback": tb[-3:],
+        },
+    )
+    # ... rest of handler
+```
+
+**Post-fix failure check:**
+
+After the fix, when PostgreSQL is stopped and a request is triggered, the agent can now:
+- See the error in VictoriaLogs (via `obs_logs_search`)
+- Get accurate error counts (via `obs_logs_error_count`)
+- Report the real underlying database failure
+
+**Healthy follow-up:**
+
+After restarting PostgreSQL and creating a new health check, the agent reports:
+
+```
+🏥 Health Check Report
+
+Status: ✅ Healthy
+
+No errors found in the last 2 minutes.
+The system looks healthy.
+```
