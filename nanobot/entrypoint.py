@@ -63,6 +63,13 @@ def resolve_config():
             mcp_servers["lms"]["env"]["NANOBOT_LMS_BACKEND_URL"] = lms_backend_url
         if lms_api_key:
             mcp_servers["lms"]["env"]["NANOBOT_LMS_API_KEY"] = lms_api_key
+    if "observability" in mcp_servers:
+        victorialogs_url = os.environ.get("VICTORIALOGS_URL", "")
+        victoriatraces_url = os.environ.get("VICTORIATRACES_URL", "")
+        if victorialogs_url:
+            mcp_servers["observability"]["env"]["VICTORIALOGS_URL"] = victorialogs_url
+        if victoriatraces_url:
+            mcp_servers["observability"]["env"]["VICTORIATRACES_URL"] = victoriatraces_url
 
     # Write resolved config
     with open(resolved_path, "w") as f:

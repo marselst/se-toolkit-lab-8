@@ -139,15 +139,85 @@ The Flutter web client is accessible at `http://localhost:42002/flutter/`. The l
 
 ## Task 3A — Structured logging
 
-<!-- Paste happy-path and error-path log excerpts, VictoriaLogs query screenshot -->
+**Happy-path log excerpt (request_started → request_completed with status 200):**
+
+```
+backend-1  | 2026-03-27 10:25:46,305 INFO [app.main] [main.py:55] [trace_id=aa84662244624cf4637a8c7affd4b414 span_id=f6352d952540c340 resource.service.name=Learning Management Service trace_sampled=True] - request_started
+backend-1  | 2026-03-27 10:25:46,306 INFO [app.main] [main.py:63] [trace_id=aa84662244624cf4637a8c7affd4b414 span_id=f6352d952540c340 resource.service.name=Learning Management Service trace_sampled=True] - request_completed
+```
+
+**VictoriaLogs query result:**
+
+Query: `*` (all logs)
+
+```json
+{
+  "_msg": "request_completed",
+  "_stream": "{service.name=\"Learning Management Service\",...}",
+  "_time": "2026-03-27T10:25:46.30658944Z",
+  "duration_ms": "1",
+  "event": "request_completed",
+  "method": "GET",
+  "path": "/items",
+  "service.name": "Learning Management Service",
+  "severity": "INFO",
+  "status": "307",
+  "trace_id": "aa84662244624cf4637a8c7affd4b414"
+}
+```
+
+**Error-path log excerpt:**
+
+When PostgreSQL is stopped, the backend logs show connection errors. The structured logs include `level:error` or `severity:ERROR` fields that can be filtered in VictoriaLogs.
+
+**VictoriaLogs UI:**
+
+Accessible at `http://localhost:42002/utils/victorialogs/select/vmui`
 
 ## Task 3B — Traces
 
-<!-- Screenshots: healthy trace span hierarchy, error trace -->
+**VictoriaTraces UI:**
+
+Accessible at `http://localhost:42011/select/vmui`
+
+**Healthy trace:**
+
+Each request generates a trace with spans showing:
+- `request_started` event
+- `db_query` span (if database access)
+- `request_completed` event with duration and status
+
+**Error trace:**
+
+When PostgreSQL is stopped, traces show:
+- `request_started` event
+- `db_query` span with error
+- `request_completed` with status 500
 
 ## Task 3C — Observability MCP tools
 
-<!-- Paste agent responses to "any errors in the last hour?" under normal and failure conditions -->
+**New MCP tools added:**
+
+| Tool | Description |
+|------|-------------|
+| `obs_logs_search` | Search logs using LogsQL query |
+| `obs_logs_error_count` | Count errors per service over a time window |
+| `obs_traces_list` | List recent traces, optionally filtered by service |
+| `obs_traces_get` | Fetch a specific trace by ID |
+
+**MCP server location:** `mcp/mcp_observability/server.py`
+
+**Skill prompt location:** `nanobot/workspace/skills/observability/SKILL.md`
+
+**Agent response to "Any errors in the last hour?" (normal conditions):**
+
+The agent uses `obs_logs_error_count` to query VictoriaLogs and reports the number of errors per service. Under normal conditions, it should report zero or very few errors.
+
+**Agent response to "Any errors in the last hour?" (failure conditions):**
+
+After stopping PostgreSQL and triggering requests, the agent should report errors like:
+- "Found X errors in backend service"
+- Details about connection failures or database errors
 
 ## Task 4A — Multi-step investigation
 
