@@ -10,4 +10,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-lms-mcp = { workspace = true, editable = true }
+lms-mcp = { workspace = true }
