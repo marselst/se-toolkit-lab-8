@@ -126,6 +126,12 @@
   "channels": {
     "sendProgress": true,
     "sendToolHints": false,
+    "webchat": {
+      "enabled": true,
+      "host": "0.0.0.0",
+      "port": 8765,
+      "allow_from": ["*"]
+    },
     "dingtalk": {
       "enabled": false,
       "clientId": "",
@@ -270,6 +276,16 @@
       "pathAppend": ""
     },
     "restrictToWorkspace": false,
+    "mcp_servers": {
+      "lms": {
+        "command": "python",
+        "args": ["-m", "mcp_lms"],
+        "env": {
+          "NANOBOT_LMS_BACKEND_URL": "http://localhost:42002",
+          "NANOBOT_LMS_API_KEY": "api1"
+        }
+      }
+    },
     "mcpServers": {
       "lms": {
         "command": "python",
