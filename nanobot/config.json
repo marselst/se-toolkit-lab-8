@@ -284,6 +284,14 @@
           "NANOBOT_LMS_BACKEND_URL": "http://localhost:42002",
           "NANOBOT_LMS_API_KEY": "api1"
         }
+      },
+      "observability": {
+        "command": "python",
+        "args": ["-m", "mcp_observability"],
+        "env": {
+          "VICTORIALOGS_URL": "http://localhost:42010",
+          "VICTORIATRACES_URL": "http://localhost:42011"
+        }
       }
     },
     "mcpServers": {
@@ -293,6 +301,14 @@
         "env": {
           "NANOBOT_LMS_BACKEND_URL": "http://localhost:42002",
           "NANOBOT_LMS_API_KEY": "api1"
+        }
+      },
+      "observability": {
+        "command": "python",
+        "args": ["-m", "mcp_observability"],
+        "env": {
+          "VICTORIALOGS_URL": "http://localhost:42010",
+          "VICTORIATRACES_URL": "http://localhost:42011"
         }
       }
     }
